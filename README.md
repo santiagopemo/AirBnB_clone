@@ -1,4 +1,4 @@
-![hbnb](https://github.com/santiagopemo/AirBnB_clone/blob/master/hbnb.png)
+![hbnb](https://github.com/santiagopemo/AirBnB_clone/blob/master/.img_dir/hbnb.png)
 
 # AirBnB clone
 This project is the first part of the AirBnB clone (HBnB) project
