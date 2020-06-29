@@ -60,6 +60,14 @@ class HBNBCommand(cmd.Cmd):
                             arguments = s_line[parentesis_idx + 1: -1]
                             try:
                                 args = eval(arguments)
+                                argu_str = arguments[1:-1]
+                                argu_tup = "({})".format(arguments.
+                                                         replace("\"", "'"))
+                                if type(args) is str and args != argu_str:
+                                    raise Exception
+                                if type(args) is tuple and \
+                                        str(args) != argu_tup:
+                                    raise Exception
                             except:
                                 return line
                             if type(args) is str \
@@ -230,7 +238,7 @@ class HBNBCommand(cmd.Cmd):
                 setattr(obj, arguments[2], value_type(arguments[3]))
             else:
                 val_str = "'{}'".format(arguments[3])
-                if val_str == arg.strip()[-len(val_str):]:
+                if val_str == arg.strip()[-len(val_str):].replace("\"", "'"):
                     setattr(obj, arguments[2], arguments[3])
                 else:
                     try:
