@@ -111,6 +111,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Exits the program
         """
+        print()
         return True
 
     def emptyline(self):
