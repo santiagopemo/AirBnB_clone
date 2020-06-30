@@ -53,13 +53,54 @@ class TestBaseModel(unittest.TestCase):
         func_names = [fn[0] for fn in bm_funcs]
         self.assertIn('save', func_names)
         self.assertIn('to_dict', func_names)
+        # bm1_dict = {
+        #             '__class__': 'BaseModel',
+        #             'id': bm1.id,
+        #             'created_at': bm1.created_at.isoformat(),
+        #             'updated_at': bm1.updated_at.isoformat()
+        #            }
+        # self.assertDictEqual(bm1.to_dict(), bm1_dict)
+        # old_date = bm1.updated_at
+        # bm1.save()
+        # self.assertNotEqual(old_date, bm1.updated_at)
+        # self.assertLess(old_date, bm1.updated_at)
+        # self.assertNotEqual(bm1.created_at, bm1.updated_at)
+        # self.assertLess(bm1.created_at, bm1.updated_at)
+
+    def test_two_instances(self):
+        bm1 = BaseModel()
+        bm2 = BaseModel()
+        self.assertNotEqual(bm1.id, bm2.id)
+        self.assertNotEqual(bm1.created_at, bm2.created_at)
+        self.assertLess(bm1.created_at, bm2.created_at)
+        self.assertNotEqual(bm1.updated_at, bm2.updated_at)
+        self.assertLess(bm1.updated_at, bm2.updated_at)
+
+    def test_str_method(self):
+        bm1 = BaseModel()
+        bm1.id = "1234"
+        bm1.name = "Holberton"
+        bm1.my_number = 89
         bm1_dict = {
-                    '__class__': 'BaseModel',
                     'id': bm1.id,
-                    'created_at': bm1.created_at.isoformat(),
-                    'updated_at': bm1.updated_at.isoformat()
+                    'created_at': repr(bm1.created_at),
+                    'updated_at': repr(bm1.updated_at),
+                    'name': 'Holberton',
+                    'my_number': 89,
                    }
-        self.assertDictEqual(bm1.to_dict(), bm1_dict)
+        cls_id = "[BaseModel] (1234)"
+        self.assertIn(cls_id, bm1.__str__())
+        for k, v in bm1_dict.items():
+            self.assertIn(str(k), bm1.__str__())
+            self.assertIn(str(v), bm1.__str__())
+
+    def test_with_kwarg(self):
+        date = datetime.now().isoformat()
+        bm1 = BaseModel(id='12345', created_at=date, updated_at=date)
+        date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%f")
+        self.assertEqual(bm1.id, "12345")
+        self.assertEqual(str(bm1.created_at), str(date))
+        self.assertEqual(str(bm1.updated_at), str(date))
 
 
 if __name__ == "__main__":
