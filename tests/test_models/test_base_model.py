@@ -136,9 +136,11 @@ class TestBaseModel(unittest.TestCase):
     def test_save(self):
         cti1 = CurrentTestClass()
         old_date = cti1.updated_at
+        sleep(0.2)
         cti1.save()
         self.assertNotEqual(old_date, cti1.updated_at)
         old_date2 = cti1.updated_at
+        sleep(0.2)
         cti1.save()
         self.assertNotEqual(old_date2, cti1.updated_at)
 
@@ -151,6 +153,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_is_saving(self):
         cti1 = CurrentTestClass()
+        sleep(0.2)
         cti1.save()
         with open('file.json') as f:
             cti1_list = json.load(f)
@@ -162,8 +165,8 @@ class TestBaseModel(unittest.TestCase):
         cti1 = CurrentTestClass()
         cti1_dict = cti1.to_dict()
         self.assertEqual(type(cti1_dict), dict)
-        for attr in cls_attr:
-            self.assertIn(attr, cti1_dict)
+        self.assertIn('updated_at', cti1_dict)
+        self.assertIn('created_at', cti1_dict)
         self.assertIn('__class__', cti1_dict)
         self.assertNotEqual(cti1_dict, cti1.__dict__)
 
