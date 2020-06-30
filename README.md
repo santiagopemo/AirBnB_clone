@@ -30,8 +30,7 @@ This command line interpreter can:
 * Do some operations on objects (count, compute stats, etc...)
 * Update attributes of an object
 
-# How to use?
-### Getting started
+## Getting started
 At first, you have to clone this repository in your machine using this command:
 
 ```bash
@@ -47,3 +46,59 @@ Finally, you can use the console this way:
 ```bash
 $ ./console.py
 ```
+
+## Usage
+Interactive mode
+```bash
+$ ./console.py
+
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  all  count  create  destroy  help  quit  show  update
+
+(hbnb)
+(hbnb) quit
+$
+```
+
+Non interactive mode
+```bash
+$ echo "help" | ./console.py
+
+(hbnb) 
+Documented commands (type help <topic>):
+========================================
+EOF  all  count  create  destroy  help  quit  show  update
+
+(hbnb)
+$
+```
+
+## Available commands and its usage:
+
+| Command       |              Syntax                       |     Output                |
+| :------------ | :---------------------------------------: | ------------------------: |
+| EOF           | EOF                                       | Exit interpreter          |
+| all           | all [class_name]                          | Displays every instance   |
+|               |                                           | of class name             |
+| count         | count [class_name]                        | Counts the instances of   |
+|               |                                           | specified class           |
+| create        | create [class_name]                       | create a new instance with|
+|               |                                           | specified name            |
+| destroy       | destroy [class_name] [object_id]          | Deletes all attributes of |
+|               |                                           | class_name.object_id      |
+| help          | help [option]                             | Shows the help for        |
+|               |                                           | specified option          |
+| quit          | quit                                      | Exit interpreter          |
+| show          | show [class_name] [object_id]             | Displays all attributes   |
+| update        | update [class_name] [object_id]           | Modifies specified        |
+|               | [update_key] [update_value]               | attribute                 |
+
+# Bugs
+No known bugs
+
+# Authors
+* Santiago Peña Mosquera [GitHub](https://github.com/santiagopemo) | [Twitter](https://twitter.com/Santiag11470161)
+* Alejandro Rusca Moreno [GitHub](https://github.com/dondropo) | [Twiter](https://twitter.com/don_dropo)
