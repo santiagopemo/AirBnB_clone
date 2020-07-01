@@ -21,13 +21,22 @@ cls_attr = ['id', 'created_at', 'updated_at', 'name']
 class TestAmenity(unittest.TestCase):
     """TestAmenity class"""
 
+    def setUp(self):
+        """Executes before each test"""
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+
     def tearDown(self):
+        """Executes when test finish"""
         try:
             os.remove("file.json")
         except IOError:
             pass
 
     def test_pep8(self):
+        """Check PEP8 style"""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(
                                        [
@@ -39,6 +48,7 @@ class TestAmenity(unittest.TestCase):
                          "Found code style errors (and warnings).")
 
     def test_docstring(self):
+        """Checks the docstring documentation"""
         self.assertTrue(len(current_module.__doc__) >= 1)
         self.assertTrue(len(CurrentTestClass.__doc__) >= 1)
         methods = inspect.getmembers(
@@ -49,6 +59,7 @@ class TestAmenity(unittest.TestCase):
             self.assertTrue(len(m[1].__doc__) >= 1)
 
     def test_base_model_single_instance(self):
+        """Test a single instance"""
         cti1 = CurrentTestClass()
         for attr in cls_attr:
             self.assertTrue(hasattr(cti1, attr))
@@ -61,6 +72,7 @@ class TestAmenity(unittest.TestCase):
         self.assertIn('to_dict', func_names)
 
     def test_two_instances(self):
+        """Test two instances"""
         cti1 = CurrentTestClass()
         cti2 = CurrentTestClass()
         self.assertNotEqual(cti1.id, cti2.id)
@@ -71,6 +83,7 @@ class TestAmenity(unittest.TestCase):
         self.assertIsNot(cti1, cti2)
 
     def test_str_method(self):
+        """Test str method"""
         cti1 = CurrentTestClass()
         cti1.id = "1234"
         cti1.name = "Holberton"
@@ -89,6 +102,7 @@ class TestAmenity(unittest.TestCase):
             self.assertIn(str(v), cti1.__str__())
 
     def test_with_kwarg(self):
+        """Test instance with **kwarg"""
         date = datetime.now().isoformat()
         cti1 = CurrentTestClass(id='12345', created_at=date, updated_at=date)
         date = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%f")
@@ -97,6 +111,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(str(cti1.updated_at), str(date))
 
     def test_with_more_kwarg(self):
+        """Test instance with extra **kwarg"""
         date = datetime.now().isoformat()
         cti1 = CurrentTestClass(id='12345', created_at=date, updated_at=date,
                                 name='Santiago', age=28)
@@ -110,6 +125,7 @@ class TestAmenity(unittest.TestCase):
         self.assertIs(type(cti1.age), int)
 
     def test_with_kwarg_class(self):
+        """Test instance __class__ attr **kwarg"""
         date = datetime.now().isoformat()
         cti1 = CurrentTestClass(id='12345', created_at=date, updated_at=date,
                                 __class__="AnotherClass")
@@ -121,6 +137,7 @@ class TestAmenity(unittest.TestCase):
         self.assertNotEqual(cti1.__class__, CurrentTestClass.__name__)
 
     def test_with_arg(self):
+        """Test with instance args"""
         date = datetime.now().isoformat()
         cti1 = CurrentTestClass('12345', date, date)
         self.assertNotEqual(cti1.id, '12345')
@@ -128,23 +145,26 @@ class TestAmenity(unittest.TestCase):
         self.assertNotEqual(cti1.updated_at, date)
 
     def test_kwargs_None(self):
+        """Test **kwargs with None"""
         with self.assertRaises(TypeError):
             CurrentTestClass(id=None, created_at=None, updated_at=None)
         cti1 = CurrentTestClass(None)
         self.assertNotIn(None, cti1.__dict__)
 
     def test_save(self):
+        """Test save() function"""
         cti1 = CurrentTestClass()
         old_date = cti1.updated_at
-        sleep(0.2)
+        sleep(1)
         cti1.save()
         self.assertNotEqual(old_date, cti1.updated_at)
         old_date2 = cti1.updated_at
-        sleep(0.2)
+        sleep(1)
         cti1.save()
         self.assertNotEqual(old_date2, cti1.updated_at)
 
     def test_save_args(self):
+        """Test save function with args"""
         cti = CurrentTestClass()
         with self.assertRaises(TypeError):
             cti.save(1)
@@ -152,8 +172,9 @@ class TestAmenity(unittest.TestCase):
             cti.save(None)
 
     def test_is_saving(self):
+        """Test if it is saving in file.json"""
         cti1 = CurrentTestClass()
-        sleep(0.2)
+        sleep(1)
         cti1.save()
         with open('file.json') as f:
             cti1_list = json.load(f)
@@ -162,6 +183,7 @@ class TestAmenity(unittest.TestCase):
         self.assertDictEqual(cti1.to_dict(), cti1_list[key])
 
     def test_to_dict(self):
+        """Test to_dict function"""
         cti1 = CurrentTestClass()
         cti1_dict = cti1.to_dict()
         self.assertEqual(type(cti1_dict), dict)
@@ -171,6 +193,7 @@ class TestAmenity(unittest.TestCase):
         self.assertNotEqual(cti1_dict, cti1.__dict__)
 
     def test_to_dict_args(self):
+        """Test to_dict function with arguments"""
         cti = CurrentTestClass()
         with self.assertRaises(TypeError):
             cti.to_dict(1)
@@ -178,6 +201,7 @@ class TestAmenity(unittest.TestCase):
             cti.to_dict(None)
 
     def test_to_dict_new_attributes(self):
+        """Test to_dict fucntion when new attributes are set"""
         cti1 = CurrentTestClass()
         cti1.name = 'Alejandro'
         cti1.age = 21
@@ -188,6 +212,7 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(21, cti1_dict['age'])
 
     def test_to_dict_datetime(self):
+        """Test to_dict function with datetime attributes"""
         cti1 = CurrentTestClass()
         old_created = cti1.created_at
         old_updated = cti1.updated_at
