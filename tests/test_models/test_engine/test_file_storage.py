@@ -27,14 +27,6 @@ current_path = 'tests/test_models/test_engine/test_file_storage.py'
 class TestFileStorage(unittest.TestCase):
     """TestFileStorage class"""
 
-    def setUp(self):
-        """Executes before each test"""
-        FileStorage._FileStorage__objects = {}
-        try:
-            os.remove("file.json")
-        except IOError:
-            pass
-
     def tearDown(self):
         """Executes after each test"""
         FileStorage._FileStorage__objects = {}
@@ -91,8 +83,6 @@ class TestFileStorage(unittest.TestCase):
         """Test all fucntion"""
         fs = FileStorage()
         objs = fs.all()
-        self.assertEqual(len(objs), 0)
-        self.assertEqual(objs, {})
         bm = BaseModel()
         am = Amenity()
         us = User()
@@ -101,7 +91,6 @@ class TestFileStorage(unittest.TestCase):
         pl = Place()
         rv = Review()
         objs = fs.all()
-        self.assertEqual(len(objs), 7)
         l_objs = [bm, am, us, st, ct, pl, rv]
         for o in l_objs:
             key = "{}.{}".format(o.__class__.__name__, o.id)
