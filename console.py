@@ -65,9 +65,9 @@ class HBNBCommand(cmd.Cmd):
                                                          replace("\"", "'"))
                                 if type(args) is str and args != argu_str:
                                     raise Exception
-                                if type(args) is tuple and \
-                                        str(args) != argu_tup:
-                                    raise Exception
+                                # if type(args) is tuple and \
+                                #         str(args) != argu_tup:
+                                #     raise Exception
                             except:
                                 return line
                             if type(args) is str \
