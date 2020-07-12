@@ -56,7 +56,7 @@
 ### Advance :muscle:
 - [x] **[9. Full details](./100-index.html)** - Write an HTML page that displays a header, footer, a filters box with dropdown and results
 - [x] **[10. Flex](./101-index.html)** - Improve the Places section by using Flexible boxes for all Place articles
-- [x] **[11. Responsive design](./102-index.html)** - Improve the page by adding responsive design to display correctly in mobile or small screens
-- [x] **[12. Accessibility](./103-index.html)** - Improve the page by adding Accessibility support
+- [ ] **[11. Responsive design](./102-index.html)** - Improve the page by adding responsive design to display correctly in mobile or small screens
+- [ ] **[12. Accessibility](./103-index.html)** - Improve the page by adding Accessibility support
 ## Author :pencil:
 **Santiago Peña Mosquera** - twitter [@Santiag11470161](https://twitter.com/Santiag11470161) - LinkedIn [Santiago Peña Mosquera](https://www.linkedin.com/in/santiago-pe%C3%B1a-mosquera-abaa20196/)
